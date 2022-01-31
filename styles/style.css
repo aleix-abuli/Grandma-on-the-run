@@ -1,0 +1,17 @@
+:root{
+    font-size: 16px;
+}
+
+#start-button {
+    padding: 10px 20px;
+    color: #ffbc5e;
+    background-color: #450099;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+canvas {
+    border: 1px solid salmon;
+    border-radius: 50px;
+}
