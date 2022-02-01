@@ -26,7 +26,7 @@ class Game {
 
 
         document.addEventListener('keyup', (event) => {
-            if ((event.code === 'KeyS') && (this.isJumping === false)){
+            if ((event.code === 'KeyS')){
                 this.projectiles.shootDentures(this.player);
             }
         })
@@ -52,6 +52,7 @@ class Game {
         this.move();
         this.draw();
         this.destroyEnemies();
+
         if (this.checkCollisions()) {
             console.log('oops');
             this.gameOver();
@@ -73,15 +74,6 @@ class Game {
         this.obstacles.move(this.frameNumber);
         this.enemies.move(this.frameNumber);
         this.projectiles.move(this.frameNumber);
-    }
-
-    draw(){
-        this.ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
-        this.background.draw(this.frameNumber);
-        this.obstacles.draw(this.frameNumber);
-        this.enemies.draw(this.frameNumber);
-        this.player.draw(this.frameNumber);
-        this.projectiles.draw(this.frameNumber);
     }
 
     checkCollisions(){
@@ -110,11 +102,11 @@ class Game {
 
             this.projectiles.dentures.forEach((dentures, indexDenture)=>{
                if(dentures.x > this.ctx.canvas.width) this.projectiles.dentures.splice(indexDenture, 1)
-               if(nurse.x > this.ctx.canvas.width) this.enemies.nurses.splice(indexNurse, 1)
+               if(nurse.x < -500) this.enemies.nurses.splice(indexNurse, 1)
 
                 let distanceX = dentures.x - nurse.x;
-                let distanceY = dentures.y - nurse.y;
-
+                let distanceY = dentures.y - nurse.y - 35; // -35 bc if not it doesn't collide in the y axis
+        
                 if((distanceX > -15 && distanceX < 1)&&(distanceY > -15 && distanceY < 1)) {   
                     this.enemies.nurses.splice(indexNurse,1)
                     this.projectiles.dentures.splice(indexDenture, 1)
@@ -133,6 +125,23 @@ class Game {
         })
     }
 
+    draw(){
+        this.ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+        this.background.draw(this.frameNumber);
+        this.obstacles.draw(this.frameNumber);
+        this.enemies.draw(this.frameNumber);
+        this.player.draw(this.frameNumber);
+        this.projectiles.draw(this.frameNumber);
+    }
+
+    drawScore(){
+        this.ctx.save();
+        this.ctx.fillStyle = "black";
+        this.ctx.font = "bold 24px sans-serif";
+        this.ctx.fillText(`Score: ${this.score} pts`, 20, 40);
+        this.ctx.restore();
+    }
+    
     gameOver(){
         this.stop();
         this.ctx.save();

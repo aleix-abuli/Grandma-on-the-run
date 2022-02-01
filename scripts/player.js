@@ -4,16 +4,21 @@ class Player{
         this.width = 128;
         this.height = 128;
         this.x = 100;
-        this.y = 320;
+        this.y = -300;
         this.vy = 0; // velocity
         this.ay = 1; // gravity
 
     }
 
     init(){
+        this.x = -500;
     }
 
     move(frameNumber){
+        let velocity = 5;
+        if(this.x < 100){
+            this.x += velocity;
+        }
         this.vy += this.ay;
         this.y += this.vy;
         if(this.y > 320) this.y = 320;
@@ -22,7 +27,7 @@ class Player{
     }
 
     jump(frameNumber){
-        this.vy = -23;
+        if(this.y === 320) this.vy = -23;
     }
 
     draw(frameNumber){

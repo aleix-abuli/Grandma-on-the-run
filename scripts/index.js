@@ -13,6 +13,7 @@ const startButton = document.getElementById('start-button');
 startButton.addEventListener(
     'click', () => {
         startButton.textContent = 'RESTART';
+        startButton.blur()
         game.start();
     }
 )

@@ -17,7 +17,7 @@ class Projectiles {
             //img: new Image(),
             width: 50,
             height: 50,
-            y: player.y,
+            y: player.y + 35,
             x: 100,
             vx : 8,
             vy: 0
