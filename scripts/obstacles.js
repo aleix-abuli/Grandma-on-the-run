@@ -10,9 +10,8 @@ class Obstacles{
 
     move(frameNumber){
         if(frameNumber < 20) return;
-        const randomGenerator = Math.floor(Math.random() * 100);
         if(frameNumber % 220 === 0){
-            const chairPosition = Math.floor((Math.random() * (this.ctx.canvas.width)) + 550)
+            const chairPosition = Math.floor((Math.random() * (this.ctx.canvas.width)))
             this.chairs.push(this.getChair(chairPosition));
         }
 
@@ -24,7 +23,7 @@ class Obstacles{
             // img: new Image(),
             width: 80,
             height: 80,
-            x: position + 550,
+            x: position + 1000,
             y: 368,
             vx: -8,
             vy: 0

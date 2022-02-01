@@ -12,18 +12,27 @@ class Projectiles {
         this.dentures.forEach(dentures => dentures.x += dentures.vx)
     }
 
-    getDentures() {
+    shootDentures(player) {
         const newDentures = {
             //img: new Image(),
             width: 50,
             height: 50,
-            y: 320,
+            y: player.y,
             x: 100,
             vx : 8,
             vy: 0
         }
 
         return this.dentures.push(newDentures);
+    }
+
+    collidesWith(nurse){ // returns true or false
+        return this.dentures.some((dentures) => 
+        dentures.x <= nurse.x + nurse.width &&
+        dentures.x + dentures.width >= nurse.x &&
+        dentures.y <= nurse.y + nurse.height &&
+        dentures.y + dentures.height >= nurse.y
+        )
     }
 
     draw(frameNumber) {

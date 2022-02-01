@@ -33,6 +33,11 @@ class Enemies{
 
         return newNurse;
     }
+
+    die(i){
+        this.nurses.splice(i, 1);
+    }
+
     draw(frameNumber){
         this.nurses.forEach((nurse) => {
             this.ctx.fillRect(nurse.x,nurse.y,nurse.width,nurse.height);
