@@ -5,7 +5,7 @@ class Projectiles {
     }
 
     init(){
-
+        this.projectiles = [];
     }
 
     move(frameNumber) {

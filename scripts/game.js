@@ -7,26 +7,18 @@ class Game {
         this.background = background;
         this.frameNumber = 0;
         this.projectiles = projectiles;
-        this.isJumping = false;
+        this.hasShot = false;
+        this.score = 0;
 
         document.addEventListener("keydown", (event) => {
             if (event.repeat) return;
             if (event.code === 'Space') {
-                this.isJumping = true;
-                if(this.isJumping) this.player.jump(this.frameNumber);
-                this.isJumping = false;
+                this.player.jump(this.frameNumber);
             }
-
-            /*document.addEventListener("keyup", (event) => { // not working :(
-                if (this.isJumping){
-                    setTimeout(()=>{this.isJumping = false;}, 100)
-                }
-            })*/
         });
 
-
         document.addEventListener('keyup', (event) => {
-            if ((event.code === 'KeyS')){
+            if ((event.code === 'KeyS' && this.player.x === 100)){
                 this.projectiles.shootDentures(this.player);
             }
         })
@@ -41,6 +33,7 @@ class Game {
     init(){
         if(this.frameNumber) this.stop();
         this.frameNumber = 0;
+        this.score = 0;
         this.background.init();
         this.player.init();
         this.obstacles.init();
@@ -52,6 +45,7 @@ class Game {
         this.move();
         this.draw();
         this.destroyEnemies();
+        this.scoreUpdate();
 
         if (this.checkCollisions()) {
             console.log('oops');
@@ -104,15 +98,26 @@ class Game {
                if(dentures.x > this.ctx.canvas.width) this.projectiles.dentures.splice(indexDenture, 1)
                if(nurse.x < -500) this.enemies.nurses.splice(indexNurse, 1)
 
-                let distanceX = dentures.x - nurse.x;
+                /*let distanceX = dentures.x - nurse.x;
                 let distanceY = dentures.y - nurse.y - 35; // -35 bc if not it doesn't collide in the y axis
         
                 if((distanceX > -15 && distanceX < 1)&&(distanceY > -15 && distanceY < 1)) {   
                     this.enemies.nurses.splice(indexNurse,1)
                     this.projectiles.dentures.splice(indexDenture, 1)
-                }
+                }*/
                 
-                console.log("distance", distanceX, distanceY)
+                let collides = nurse.x <= dentures.x + dentures.width &&
+                nurse.x + nurse.width >= dentures.x &&  
+    
+                nurse.y <= dentures.y + dentures.height &&
+                nurse.y + nurse.height >= dentures.y;
+                
+                if(collides) {
+                    this.enemies.nurses.splice(indexNurse,1)
+                    this.projectiles.dentures.splice(indexDenture,1)
+                }
+
+                //console.log("distance", distanceX, distanceY)
            
            })
 
@@ -132,13 +137,19 @@ class Game {
         this.enemies.draw(this.frameNumber);
         this.player.draw(this.frameNumber);
         this.projectiles.draw(this.frameNumber);
+        this.drawScore();
+    }
+
+    scoreUpdate(){
+        console.log('test')
+        if(this.frameNumber !== 0 && this.frameNumber%300 === 0)this.score ++
     }
 
     drawScore(){
         this.ctx.save();
-        this.ctx.fillStyle = "black";
-        this.ctx.font = "bold 24px sans-serif";
-        this.ctx.fillText(`Score: ${this.score} pts`, 20, 40);
+        this.ctx.fillStyle = "#450099";
+        this.ctx.font = "bold 24px 'Press Start 2P'";
+        this.ctx.fillText(`SCORE: ${this.score}`, 30, 50);
         this.ctx.restore();
     }
     

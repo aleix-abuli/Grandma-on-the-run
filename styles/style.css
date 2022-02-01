@@ -2,16 +2,40 @@
     font-size: 16px;
 }
 
+body {
+    background-color: #ffbc5e;
+}
+
+.game-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #start-button {
     padding: 10px 20px;
-    color: #ffbc5e;
+    color: white;
     background-color: #450099;
     border-radius: 20px;
     border: 0px;
     font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
 }
 
 canvas {
     border: 1px solid salmon;
     border-radius: 50px;
+    margin-top: 20px;
+}
+
+h1 {
+    font-family: 'Press Start 2P', cursive;
+    color: #450099;
+    font-size: 3rem;
+    background-color: white;
+    padding: 30px;
+    border-radius: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
