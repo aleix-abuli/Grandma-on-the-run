@@ -122,6 +122,13 @@ class Game {
             collisions = true;
         }
 
+        if (this.helibullets.bullets.some((bullet) =>
+            this.player.collidesWith(bullet)
+                )
+            )   {
+            collisions = true;
+        }
+
         return collisions;
     }
 

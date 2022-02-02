@@ -1,10 +1,10 @@
 class Helicopters{
     constructor(ctx){
         this.ctx = ctx;
-        this.helicopterWidth =  68,
-        this.helicopterHeight = 108,
+        this.helicopterWidth =  150,
+        this.helicopterHeight = 90,
         this.helicopterImg =  new Image(),
-        this.helicopterImg.src = "images/nurse.png"
+        this.helicopterImg.src = "images/helicopter.png"
         this.helicopters = [];
     }
 
@@ -16,7 +16,7 @@ class Helicopters{
     move(frameNumber){
         if(frameNumber < 100) return;
 
-        if(frameNumber > 1500 && frameNumber % 300 === 0){
+        if(frameNumber > 1500 && frameNumber % 500 === 0){
             const helicopterPosition = Math.floor((Math.random() * (this.ctx.canvas.width)) + 1000)
             this.helicopters.push(this.getHelicopter(helicopterPosition));
         }
@@ -46,7 +46,7 @@ class Helicopters{
             width: this.helicopterWidth,
             height: this.helicopterHeight,
 
-            spriteColumns: 4,
+            spriteColumns: 2,
             spriteRows: 1,
 
             spriteCol: 0,

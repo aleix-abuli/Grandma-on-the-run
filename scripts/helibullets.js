@@ -4,7 +4,7 @@ class Helibullets {
         this.bulletsHeight = 75;
         this.bulletsWidth = 54;
         this.bulletsImg = new Image(),
-        this.bulletsImg.src = '/images/dentures.png'
+        this.bulletsImg.src = '/images/bullets.png'
         this.bullets = [];
     }
 
