@@ -165,9 +165,9 @@ class Game {
         this.ctx.fillRect(0,0,this.ctx.canvas.width, this.ctx.canvas.height);
         this.ctx.fillStyle = "white";
         this.ctx.textAlign = "center";
-        this.ctx.font = "bold 32px sans-serif";
+        this.ctx.font = "bold 32px 'Press Start 2P'";
         this.ctx.fillText(
-            "Game Over",
+            `Oops!\nBack to the asylum!`,
             this.ctx.canvas.width/2,
             this.ctx.canvas.height/2
         );

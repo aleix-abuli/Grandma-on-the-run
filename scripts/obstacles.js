@@ -1,6 +1,10 @@
 class Obstacles{
     constructor(ctx){
         this.ctx = ctx;
+        this.chairWidth = 53;
+        this.chairHeight = 55;
+        this.chairImg = new Image();
+        this.chairImg.src = "/images/wheelchair.png"
         this.chairs = [];
     }
 
@@ -20,24 +24,26 @@ class Obstacles{
 
     getChair(position){
         const newChair = {
-            // img: new Image(),
-            width: 80,
-            height: 80,
+            width: this.chairWidth,
+            height: this.chairHeight,
             x: position + 1000,
-            y: 368,
+            y: 340,
             vx: -8,
             vy: 0
         }
-
-        // newChair.img.src = 
 
         return newChair;
     }
 
     draw(frameNumber){
         this.chairs.forEach((chair) => {
-            this.ctx.fillRect(chair.x,chair.y,chair.width,chair.height);
-            }
-        )
+            this.ctx.drawImage(
+                this.chairImg,
+                chair.x,
+                chair.y,
+                chair.width * 1.5,
+                chair.height * 1.5
+            )
+        })
     }
 }

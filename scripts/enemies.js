@@ -4,39 +4,46 @@ class Enemies{
         this.nurseWidth =  68,
         this.nurseHeight = 108,
         this.nurseImg =  new Image(),
-        this.nurseImg.src =  "images/nurse.png"
+        this.nurseImg.src = "images/nurse.png"
+        this.enemyRate = 150;
         this.nurses = [];
     }
 
     init(){
         this.nurses = [];
+        this.enemyRate = 150;
     }
 
-    move(frameNumber){
+    move(frameNumber){ // PENSAR DIFICULTAT!!!
         if(frameNumber < 20) return;
-        if(frameNumber % 150 === 0){
+        this.increaseDifficulty(frameNumber);
+
+        if(frameNumber % this.enemyRate === 0){
             const nursePosition = Math.floor((Math.random() * (this.ctx.canvas.width)) + 1000)
             this.nurses.push(this.getNurse(nursePosition));
         }
+    
+        this.nurses.forEach(nurse => nurse.x += nurse.vx);
+    }
 
-        this.nurses.forEach(nurse => {
-            nurse.x += nurse.vx
-            debugger
-        });
-        
+    increaseDifficulty(frameNumber){
+        if(frameNumber % 1000 === 0 && frameNumber !== 0){
+            this.enemyRate -= 5;
+            this.nurses.forEach(nurse => nurse.vx -= 0.2)
+        }
     }
 
     setSpriteFrame(nurse, frameNumber) {
-            if(frameNumber % 10 === 0) {
-                nurse.spriteCol += 1;
+        if(frameNumber % 10 === 0) {
+            nurse.spriteCol += 1;
     
-                if(nurse.spriteCol >= nurse.spriteColumns) {
-                    nurse.spriteCol = 0;
-                }
-    
-                nurse.spriteX = (nurse.width * nurse.spriteCol)
-                nurse.spriteY = (nurse.height * nurse.spriteRow)
+            if(nurse.spriteCol >= nurse.spriteColumns) {
+                nurse.spriteCol = 0;
             }
+    
+            nurse.spriteX = (nurse.width * nurse.spriteCol)
+            nurse.spriteY = (nurse.height * nurse.spriteRow)
+        }
     }
 
     getNurse(position){
@@ -63,7 +70,6 @@ class Enemies{
 
     draw(frameNumber){
         this.nurses.forEach((nurse) => {
-            console.log('nurse draw')
             this.setSpriteFrame(nurse, frameNumber);
             this.ctx.drawImage(
                 this.nurseImg,

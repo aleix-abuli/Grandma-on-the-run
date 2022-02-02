@@ -8,7 +8,7 @@ class Background{
             height: this.ctx.canvas.height,
             x: 0,
             y: 0,
-            vx: -3,
+            vx: -2.5,
             vy: 0
         }
 
@@ -21,7 +21,7 @@ class Background{
             height: this.ctx.canvas.height,
             x: 0,
             y: 0,
-            vx: -1.5,
+            vx: -1.2,
             vy: 0
         }
 
@@ -33,7 +33,7 @@ class Background{
             height: this.ctx.canvas.height,
             x: 0,
             y: 0,
-            vx: -1,
+            vx: -0.8,
             vy: 0
         }
 
@@ -45,7 +45,7 @@ class Background{
             height: this.ctx.canvas.height,
             x: 0,
             y: 0,
-            vx: -0.5,
+            vx: -0.2,
             vy: 0
         }
 
