@@ -6,17 +6,19 @@ class Enemies{
         this.nurseImg =  new Image(),
         this.nurseImg.src = "images/nurse.png"
         this.enemyRate = 150;
+        this.enemyV = -8;
         this.nurses = [];
     }
 
     init(){
         this.nurses = [];
         this.enemyRate = 150;
+        this.enemyV = -8;
+        this.nurses.forEach(nurse => nurse.x = 2000)
     }
 
     move(frameNumber){ // PENSAR DIFICULTAT!!!
-        if(frameNumber < 20) return;
-        this.increaseDifficulty(frameNumber);
+        if(frameNumber < 100) return;
 
         if(frameNumber % this.enemyRate === 0){
             const nursePosition = Math.floor((Math.random() * (this.ctx.canvas.width)) + 1000)
@@ -27,9 +29,9 @@ class Enemies{
     }
 
     increaseDifficulty(frameNumber){
-        if(frameNumber % 1000 === 0 && frameNumber !== 0){
-            this.enemyRate -= 5;
-            this.nurses.forEach(nurse => nurse.vx -= 0.2)
+        if(frameNumber % 500 === 0 && frameNumber !== 0){
+            this.enemyRate -= 6;
+            this.enemyV -= 0.5;
         }
     }
 
@@ -50,7 +52,7 @@ class Enemies{
         const newNurse = {
             x: position,
             y: 320,
-            vx: -8,
+            vx: this.enemyV,
             vy: 0,
             width: this.nurseWidth,
             height: this.nurseHeight,

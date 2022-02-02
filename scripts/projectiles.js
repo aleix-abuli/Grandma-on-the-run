@@ -9,7 +9,7 @@ class Projectiles {
     }
 
     init(){
-        this.projectiles = [];
+        this.dentures = [];
     }
 
     move(frameNumber) {

@@ -34,11 +34,14 @@ class Game {
     start(){
         this.init();
         this.play();
+        
     };
 
     init(){
         if(this.frameNumber) this.stop();
         this.frameNumber = 0;
+        this.obstacles.nurses = [];
+        console.log(this.frameNumber)
         this.score = 0;
         this.background.init();
         this.player.init();
@@ -52,7 +55,7 @@ class Game {
         this.draw();
         this.destroyEnemies();
         this.scoreUpdate();
-
+        this.increaseDifficulty();
         if (this.checkCollisions()) {
             console.log('oops');
             this.gameOver();
@@ -61,14 +64,19 @@ class Game {
         if (this.frameNumber !== null) {
             this.frameNumber = requestAnimationFrame(this.play.bind(this));
         }
+        this.enemies.nurses.forEach(enemy => console.log('enemy', enemy.vx))
+        this.obstacles.chairs.forEach(chair => console.log('chair', chair.vx))
+        console.log(this.obstacles.chairs.length)
     };
 
     stop(){
         cancelAnimationFrame(this.frameNumber);
         this.frameNumber = null;
+        
     }
 
     move(){
+        this.frameNumber ++;
         this.player.move(this.frameNumber);
         this.background.move(this.frameNumber);
         this.obstacles.move(this.frameNumber);
@@ -101,16 +109,8 @@ class Game {
         this.enemies.nurses.forEach((nurse, indexNurse)=>{
 
             this.projectiles.dentures.forEach((dentures, indexDenture)=>{
-               if(dentures.x > this.ctx.canvas.width) this.projectiles.dentures.splice(indexDenture, 1)
-               if(nurse.x < -500) this.enemies.nurses.splice(indexNurse, 1)
-
-                /*let distanceX = dentures.x - nurse.x;
-                let distanceY = dentures.y - nurse.y - 35; // -35 bc if not it doesn't collide in the y axis
-        
-                if((distanceX > -15 && distanceX < 1)&&(distanceY > -15 && distanceY < 1)) {   
-                    this.enemies.nurses.splice(indexNurse,1)
-                    this.projectiles.dentures.splice(indexDenture, 1)
-                }*/
+               if(dentures.x > this.ctx.canvas.width) this.projectiles.dentures.splice(indexDenture, 1);
+               if(nurse.x < -500) this.enemies.nurses.splice(indexNurse, 1);
                 
                 let collides = nurse.x <= dentures.x + dentures.width &&
                 nurse.x + nurse.width >= dentures.x &&  
@@ -122,8 +122,6 @@ class Game {
                     this.enemies.nurses.splice(indexNurse,1)
                     this.projectiles.dentures.splice(indexDenture,1)
                 }
-
-                //console.log("distance", distanceX, distanceY)
            
            })
 
@@ -132,8 +130,13 @@ class Game {
 
         this.obstacles.chairs.forEach((chair, indexChair)=>{
             if(chair.x < -500) this.obstacles.chairs.splice(indexChair, 1)
-            console.log("chairs", this.obstacles.chairs.length)
         })
+    }
+
+    increaseDifficulty(){
+        this.enemies.increaseDifficulty(this.frameNumber);
+        this.obstacles.increaseDifficulty(this.frameNumber);
+        this.background.increaseVelocity(this.frameNumber);
     }
 
     draw(){
@@ -147,7 +150,7 @@ class Game {
     }
 
     scoreUpdate(){
-        if(this.frameNumber !== 0 && this.frameNumber%300 === 0)this.score ++
+        if(this.frameNumber !== 0 && this.frameNumber% 20 === 0)this.score ++
     }
 
     drawScore(){

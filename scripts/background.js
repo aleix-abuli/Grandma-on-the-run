@@ -8,7 +8,7 @@ class Background{
             height: this.ctx.canvas.height,
             x: 0,
             y: 0,
-            vx: -2.5,
+            vx: -5,
             vy: 0
         }
 
@@ -21,7 +21,7 @@ class Background{
             height: this.ctx.canvas.height,
             x: 0,
             y: 0,
-            vx: -1.2,
+            vx: -1,
             vy: 0
         }
 
@@ -45,7 +45,7 @@ class Background{
             height: this.ctx.canvas.height,
             x: 0,
             y: 0,
-            vx: -0.2,
+            vx: -0.4,
             vy: 0
         }
 
@@ -61,6 +61,7 @@ class Background{
         this.backgroundParallax1.y = 0;
         this.backgroundFront.x = 0;
         this.backgroundFront.y = 0;
+        this.backgroundFront.vx = -5;
     }
 
     move(frameNumber){
@@ -73,6 +74,12 @@ class Background{
         if(this.backgroundParallax2.x + this.backgroundParallax2.width <= 0) this.backgroundParallax2.x = 0;
         if(this.backgroundParallax1.x + this.backgroundParallax1.width <= 0) this.backgroundParallax1.x = 0;
         if(this.backgroundFront.x + this.backgroundFront.width <= 0) this.backgroundFront.x = 0;
+    }
+
+    increaseVelocity(frameNumber){
+        if(frameNumber % 500 === 0 && frameNumber !== 0){
+            this.backgroundFront.vx -= 0.5;
+        }
     }
 
     draw(frameNumber){
