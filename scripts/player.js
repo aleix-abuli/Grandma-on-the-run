@@ -1,17 +1,32 @@
 class Player{
     constructor(ctx){
         this.ctx = ctx;
-        this.width = 128;
-        this.height = 128;
+        this.width = 80;
+        this.height = 112;
         this.x = 100;
         this.y = -300;
         this.vy = 0; // velocity
         this.ay = 1; // gravity
 
+        this.img = new Image();
+        this.img.src = '/images/grandma.png';
+
+        this.spriteColumns = 4;
+        this.spriteRows = 1;
+
+        this.spriteCol = 0;
+        this.spriteRow = 0;
+        this.spriteX = 0;
+        this.spriteY = 0;
+
     }
 
     init(){
         this.x = -500;
+        this.spriteCol = 0;
+        this.spriteRow = 0;
+        this.spriteX = 0;
+        this.spriteY = 0;
     }
 
     move(frameNumber){
@@ -26,12 +41,36 @@ class Player{
         
     }
 
+    setSpriteFrame(frameNumber){
+        if(frameNumber % 10 === 0){
+            this.spriteCol += 1;
+
+            if(this.spriteCol >= this.spriteColumns) {
+                this.spriteCol = 0;
+            }
+
+            this.spriteX = (this.width * this.spriteCol);
+            this.spriteY = (this.height * this.spriteRow);
+        }
+    }
+
     jump(frameNumber){
         if(this.y === 320) this.vy = -23;
     }
 
     draw(frameNumber){
-        this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        this.setSpriteFrame(frameNumber);
+        this.ctx.drawImage(
+            this.img,
+            this.spriteX,
+            this.spriteY,
+            this.width,
+            this.height,
+            this.x,
+            this.y,
+            this.width,
+            this.height
+        );
     }
     
     collidesWith(object){

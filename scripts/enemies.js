@@ -1,6 +1,10 @@
 class Enemies{
     constructor(ctx){
         this.ctx = ctx;
+        this.nurseWidth =  68,
+        this.nurseHeight = 108,
+        this.nurseImg =  new Image(),
+        this.nurseImg.src =  "images/nurse.png"
         this.nurses = [];
     }
 
@@ -15,34 +19,64 @@ class Enemies{
             this.nurses.push(this.getNurse(nursePosition));
         }
 
-        this.nurses.forEach(nurse => nurse.x += nurse.vx);
+        this.nurses.forEach(nurse => {
+            nurse.x += nurse.vx
+            debugger
+        });
+        
+    }
+
+    setSpriteFrame(nurse, frameNumber) {
+            if(frameNumber % 10 === 0) {
+                nurse.spriteCol += 1;
+    
+                if(nurse.spriteCol >= nurse.spriteColumns) {
+                    nurse.spriteCol = 0;
+                }
+    
+                nurse.spriteX = (nurse.width * nurse.spriteCol)
+                nurse.spriteY = (nurse.height * nurse.spriteRow)
+            }
     }
 
     getNurse(position){
         const newNurse = {
-            // img: new Image(),
-            width: 128,
-            height: 128,
             x: position,
             y: 320,
             vx: -8,
-            vy: 0
+            vy: 0,
+            width: this.nurseWidth,
+            height: this.nurseHeight,
+
+            spriteColumns: 4,
+            spriteRows: 1,
+
+            spriteCol: 0,
+            spriteRow: 0,
+            spriteX: 0,
+            spriteY: 0,
         }
 
-        // newChair.img.src = 
 
         return newNurse;
     }
 
-    die(i){
-        this.nurses.splice(i, 1);
-    }
-
     draw(frameNumber){
         this.nurses.forEach((nurse) => {
-            this.ctx.fillRect(nurse.x,nurse.y,nurse.width,nurse.height);
-            }
-        )
+            console.log('nurse draw')
+            this.setSpriteFrame(nurse, frameNumber);
+            this.ctx.drawImage(
+                this.nurseImg,
+                nurse.spriteX,
+                nurse.spriteY,
+                nurse.width,
+                nurse.height,
+                nurse.x,
+                nurse.y,
+                nurse.width,
+                nurse.height
+            )
+        })
         
     }
 }

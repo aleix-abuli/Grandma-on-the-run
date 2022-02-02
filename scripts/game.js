@@ -18,8 +18,14 @@ class Game {
         });
 
         document.addEventListener('keyup', (event) => {
-            if ((event.code === 'KeyS' && this.player.x === 100)){
+            if ((event.code === 'KeyS' && this.player.x === 100) && this.hasShot === false){
+                
                 this.projectiles.shootDentures(this.player);
+                this.hasShot = true;
+
+                setTimeout(() => {
+                    this.hasShot = false;
+                }, 300);
             }
         })
     };
@@ -141,7 +147,6 @@ class Game {
     }
 
     scoreUpdate(){
-        console.log('test')
         if(this.frameNumber !== 0 && this.frameNumber%300 === 0)this.score ++
     }
 
@@ -156,6 +161,17 @@ class Game {
     gameOver(){
         this.stop();
         this.ctx.save();
+        this.ctx.fillStyle = "rgba(69,0,154,0.7)";
+        this.ctx.fillRect(0,0,this.ctx.canvas.width, this.ctx.canvas.height);
+        this.ctx.fillStyle = "white";
+        this.ctx.textAlign = "center";
+        this.ctx.font = "bold 32px sans-serif";
+        this.ctx.fillText(
+            "Game Over",
+            this.ctx.canvas.width/2,
+            this.ctx.canvas.height/2
+        );
+        this.ctx.restore();
     }
 
 }
