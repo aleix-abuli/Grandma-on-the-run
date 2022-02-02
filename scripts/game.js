@@ -1,14 +1,17 @@
 class Game {
-    constructor(ctx, player, obstacles, enemies, background, projectiles){
+    constructor(ctx, player, obstacles, enemies, background, projectiles, helicopters, helibullets){
         this.ctx = ctx;
         this.player = player;
         this.obstacles = obstacles;
         this.enemies = enemies;
         this.background = background;
+        this.helicopters = helicopters;
+        this.helibullets = helibullets;
         this.frameNumber = 0;
         this.projectiles = projectiles;
         this.hasShot = false;
         this.score = 0;
+        this.frames = 0;
 
         document.addEventListener("keydown", (event) => {
             if (event.repeat) return;
@@ -40,7 +43,10 @@ class Game {
     init(){
         if(this.frameNumber) this.stop();
         this.frameNumber = 0;
+        this.frames = 0;
         this.obstacles.nurses = [];
+        this.obstacles.chairs = [];
+        this.helicopters.helicopters = [];
         console.log(this.frameNumber)
         this.score = 0;
         this.background.init();
@@ -48,6 +54,8 @@ class Game {
         this.obstacles.init();
         this.enemies.init();
         this.projectiles.init();
+        this.helicopters.init();
+        this.helibullets.init();
     };
 
     play(){
@@ -64,9 +72,12 @@ class Game {
         if (this.frameNumber !== null) {
             this.frameNumber = requestAnimationFrame(this.play.bind(this));
         }
+        
         this.enemies.nurses.forEach(enemy => console.log('enemy', enemy.vx))
         this.obstacles.chairs.forEach(chair => console.log('chair', chair.vx))
-        console.log(this.obstacles.chairs.length)
+
+        console.log('FRAMENUMBER',this.frameNumber)
+        console.log('FRAMES',this.frames)
     };
 
     stop(){
@@ -76,12 +87,14 @@ class Game {
     }
 
     move(){
-        this.frameNumber ++;
-        this.player.move(this.frameNumber);
-        this.background.move(this.frameNumber);
-        this.obstacles.move(this.frameNumber);
-        this.enemies.move(this.frameNumber);
-        this.projectiles.move(this.frameNumber);
+        this.frames ++;
+        this.player.move(this.frames);
+        this.background.move(this.frames);
+        this.obstacles.move(this.frames);
+        this.enemies.move(this.frames);
+        this.projectiles.move(this.frames);
+        this.helicopters.move(this.frames);
+        this.helibullets.move(this.frames, this.helicopters.helicopters);
     }
 
     checkCollisions(){
@@ -97,6 +110,13 @@ class Game {
 
         if (this.enemies.nurses.some((nurse) =>
             this.player.collidesWith(nurse)
+                )
+            )   {
+            collisions = true;
+        }
+
+        if (this.helicopters.helicopters.some((helicopter) =>
+            this.player.collidesWith(helicopter)
                 )
             )   {
             collisions = true;
@@ -122,10 +142,26 @@ class Game {
                     this.enemies.nurses.splice(indexNurse,1)
                     this.projectiles.dentures.splice(indexDenture,1)
                 }
-           
            })
+        })
 
+        this.helicopters.helicopters.forEach((helicopter, indexHelicopter)=>{
 
+            this.projectiles.dentures.forEach((dentures, indexDenture)=>{
+               if(dentures.x > this.ctx.canvas.width) this.projectiles.dentures.splice(indexDenture, 1);
+               if(helicopter.x < -500) this.helicopters.helicopters.splice(indexHelicopter, 1);
+                
+                let collides = helicopter.x <= dentures.x + dentures.width &&
+                helicopter.x + helicopter.width >= dentures.x &&  
+    
+                helicopter.y <= dentures.y + dentures.height &&
+                helicopter.y + helicopter.height >= dentures.y;
+                
+                if(collides) {
+                    this.helicopters.helicopters.splice(indexHelicopter,1)
+                    this.projectiles.dentures.splice(indexDenture,1)
+                }
+           })
         })
 
         this.obstacles.chairs.forEach((chair, indexChair)=>{
@@ -146,6 +182,8 @@ class Game {
         this.enemies.draw(this.frameNumber);
         this.player.draw(this.frameNumber);
         this.projectiles.draw(this.frameNumber);
+        this.helicopters.draw(this.frameNumber);
+        this.helibullets.draw(this.frameNumber);
         this.drawScore();
     }
 
