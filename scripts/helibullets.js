@@ -5,7 +5,7 @@ class Helibullets {
         this.bulletsWidth = 54;
 
         this.bulletsImg = new Image(),
-        this.bulletsImg.src = '/images/bullets.png'
+        this.bulletsImg.src = 'images/bullets.png'
 
         this.bullets = [];
     };

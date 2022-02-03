@@ -12,7 +12,7 @@ class Background{
             vy: 0
         }
 
-        this.backgroundFront.img.src = "/images/bg-1.png";
+        this.backgroundFront.img.src = "images/bg-1.png";
 
         
         this.backgroundParallax1 = {
@@ -25,7 +25,7 @@ class Background{
             vy: 0
         }
 
-        this.backgroundParallax1.img.src = "/images/bg-2.png";
+        this.backgroundParallax1.img.src = "images/bg-2.png";
 
         this.backgroundParallax2 = {
             img: new Image(),
@@ -37,7 +37,7 @@ class Background{
             vy: 0
         }
 
-        this.backgroundParallax2.img.src = "/images/bg-3.png";
+        this.backgroundParallax2.img.src = "images/bg-3.png";
 
         this.backgroundFar = {
             img: new Image(),
@@ -49,7 +49,7 @@ class Background{
             vy: 0
         }
 
-        this.backgroundFar.img.src = "/images/bg-4.png";
+        this.backgroundFar.img.src = "images/bg-4.png";
     }
 
     init(){

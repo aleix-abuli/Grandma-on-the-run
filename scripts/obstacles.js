@@ -5,7 +5,7 @@ class Obstacles{
         this.chairHeight = 55;
 
         this.chairImg = new Image();
-        this.chairImg.src = "/images/wheelchair.png"
+        this.chairImg.src = "images/wheelchair.png"
 
         this.obstacleV = -5; // Velocity that increments with increaseDifficulty()
         this.obstacleRate = 220; // Rate of frames at which obstacles are created
