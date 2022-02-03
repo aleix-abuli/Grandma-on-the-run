@@ -10,7 +10,7 @@ class Player{
         this.speed = 5;
 
         this.img = new Image();
-        this.img.src = './images/grandma.png';
+        this.img.src = 'images/grandma.png';
 
         this.spriteColumns = 4;
         this.spriteRows = 1;
