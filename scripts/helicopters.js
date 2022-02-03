@@ -3,16 +3,22 @@ class Helicopters{
         this.ctx = ctx;
         this.helicopterWidth =  150,
         this.helicopterHeight = 90,
+
         this.helicopterImg =  new Image(),
         this.helicopterImg.src = "images/helicopter.png"
-        this.helicopters = [];
-    }
 
+        this.helicopters = [];
+    };
+
+
+    // Helicopters initial settings
     init(){
         this.helicopters = [];
         this.helicopters.forEach(helicopter => helicopter.x = 2000)
-    }
+    };
 
+
+    // Once the game has run for more than 1500 frames, helicopters appear at random spacing
     move(frameNumber){
         if(frameNumber < 100) return;
 
@@ -22,8 +28,10 @@ class Helicopters{
         }
     
         this.helicopters.forEach(helicopter => helicopter.x += helicopter.vx);
-    }
+    };
 
+
+    // Sprite logic to animate every 10 frames
     setSpriteFrame(helicopter, frameNumber) {
         if(frameNumber % 10 === 0) {
             helicopter.spriteCol += 1;
@@ -35,8 +43,9 @@ class Helicopters{
             helicopter.spriteX = (helicopter.width * helicopter.spriteCol)
             helicopter.spriteY = (helicopter.height * helicopter.spriteRow)
         }
-    }
+    };
 
+    // Method to create new helicopters to be pushed in move
     getHelicopter(position){
         const newHelicopter = {
             x: position,
@@ -57,8 +66,10 @@ class Helicopters{
 
 
         return newHelicopter;
-    }
+    };
 
+
+    // Draw
     draw(frameNumber){
         this.helicopters.forEach((helicopter) => {
             this.setSpriteFrame(helicopter, frameNumber);
@@ -75,5 +86,5 @@ class Helicopters{
             )
         })
         
-    }
+    };
 }

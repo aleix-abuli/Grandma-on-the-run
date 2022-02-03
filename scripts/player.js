@@ -19,8 +19,7 @@ class Player{
         this.spriteRow = 0;
         this.spriteX = 0;
         this.spriteY = 0;
-
-    }
+    };
 
 
     // Player initial settings
@@ -30,7 +29,7 @@ class Player{
         this.spriteRow = 0;
         this.spriteX = 0;
         this.spriteY = 0;
-    }
+    };
 
 
     // Move at every frame
@@ -45,7 +44,13 @@ class Player{
     
         if(this.y > 320) this.y = 320;
         if(this.y < 40) this.y = 40;
-    }
+    };
+
+
+    // Jumping mechanics
+    jump(){
+        if(this.y === 320) this.vy = -23;
+    };
 
 
     // Sprite logic to animate every 10 frames
@@ -60,13 +65,7 @@ class Player{
             this.spriteX = (this.width * this.spriteCol);
             this.spriteY = (this.height * this.spriteRow);
         }
-    }
-
-
-    // Jumping mechanics
-    jump(){
-        if(this.y === 320) this.vy = -23;
-    }
+    };
 
 
     // Draw
@@ -82,8 +81,8 @@ class Player{
             this.y,
             this.width,
             this.height
-        );
-    }
+        )
+    };
     
 
     // Checking for collisions between the player and the obstacles/enemies
@@ -94,6 +93,6 @@ class Player{
 
             this.y <= object.y + object.height &&
             this.y + this.height >= object.y
-        );
-    }
+        )
+    };
 }

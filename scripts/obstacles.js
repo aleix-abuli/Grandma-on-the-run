@@ -11,7 +11,7 @@ class Obstacles{
         this.obstacleRate = 220; // Rate of frames at which obstacles are created
 
         this.chairs = [];
-    }
+    };
 
 
     // Obstacles initial settings
@@ -19,10 +19,10 @@ class Obstacles{
         this.chairs = [];
         this.obstacleRate = 220;
         this.obstacleV = -5;
-    }
+    };
 
 
-    // Move at every frame
+    // Chairs start appearing at random spacing in a set rate
     move(frames){
         if(frames < 100) return;
 
@@ -32,16 +32,7 @@ class Obstacles{
         }
 
         this.chairs.forEach(chair => chair.x += chair.vx);
-    }
-
-
-    // Increasing difficulty method
-    increaseDifficulty(frames){
-        if(frames % 500 === 0 && frames !== 0){
-            this.obstacleRate -= 6;
-            this.obstacleV -= 0.5;
-        }
-    }
+    };
 
 
     // Method to create new objects to be pushed in move
@@ -56,7 +47,16 @@ class Obstacles{
         }
 
         return newChair;
-    }
+    };
+
+
+    // Increasing difficulty method
+    increaseDifficulty(frames){
+        if(frames % 500 === 0 && frames !== 0){
+            this.obstacleRate -= 6;
+            this.obstacleV -= 0.5;
+        }
+    };
 
     
     // Draw
@@ -70,5 +70,5 @@ class Obstacles{
                 chair.height * 1.5
             )
         })
-    }
+    };
 }

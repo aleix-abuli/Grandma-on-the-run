@@ -3,37 +3,34 @@ class Helibullets {
         this.ctx = ctx;
         this.bulletsHeight = 75;
         this.bulletsWidth = 54;
+
         this.bulletsImg = new Image(),
         this.bulletsImg.src = '/images/bullets.png'
-        this.bullets = [];
-    }
 
+        this.bullets = [];
+    };
+
+
+    // Bullet initial settings
     init(){
         this.bullets = [];
-    }
+    };
 
+
+    // Every 100 frames helicopters shoot while they are inside the canvas
     move(frameNumber, helicopterArr) {
         if(frameNumber%100 === 0) helicopterArr.forEach((helicopter)=>{
-            if(helicopter.x < this.ctx.canvas.width) this.shoot(helicopter)
-            bulletSound.play();
+            if(helicopter.x < this.ctx.canvas.width){
+                this.shoot(helicopter);
+                bulletSound.play();
+            }
         })
         
         this.bullets.forEach(bullet => bullet.x += bullet.vx)
-    }
+    };
 
-    setSpriteFrame(bullet, frameNumber){
-        if(frameNumber % 10 === 0) {
-            bullet.spriteCol += 1;
-    
-            if(bullet.spriteCol >= bullet.spriteColumns) {
-                bullet.spriteCol = 0;
-            }
-    
-            bullet.spriteX = (bullet.width * bullet.spriteCol)
-            bullet.spriteY = (bullet.height * bullet.spriteRow)
-        }
-    }
 
+    // A bullet is pushed to the array of bullets
     shoot(helicopter) {
         const newBullet = {
             width: this.bulletsWidth,
@@ -51,10 +48,26 @@ class Helibullets {
             spriteX: 0,
             spriteY: 0
         }
-
         return this.bullets.push(newBullet);
-    }
+    };
 
+
+    // Sprite logic to animate every 10 frames
+    setSpriteFrame(bullet, frameNumber){
+        if(frameNumber % 10 === 0) {
+            bullet.spriteCol += 1;
+    
+            if(bullet.spriteCol >= bullet.spriteColumns) {
+                bullet.spriteCol = 0;
+            }
+    
+            bullet.spriteX = (bullet.width * bullet.spriteCol)
+            bullet.spriteY = (bullet.height * bullet.spriteRow)
+        }
+    };
+
+
+    // Draw
     draw(frameNumber) {
         this.bullets.forEach((bullet) => {
             this.setSpriteFrame(bullet, frameNumber)
@@ -70,5 +83,5 @@ class Helibullets {
                 bullet.height
             )
         })
-    }
+    };
 }

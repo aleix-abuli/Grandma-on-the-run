@@ -3,32 +3,27 @@ class Projectiles {
         this.ctx = ctx;
         this.denturesHeight = 75;
         this.denturesWidth = 54;
+
         this.denturesImg = new Image(),
         this.denturesImg.src = '/images/dentures.png'
-        this.dentures = [];
-    }
 
+        this.dentures = [];
+    };
+
+
+    // Projectiles initial settings
     init(){
         this.dentures = [];
-    }
+    };
 
+
+    // Projectiles movement through the canvas
     move(frameNumber) {
         this.dentures.forEach(dentures => dentures.x += dentures.vx)
-    }
+    };
 
-    setSpriteFrame(dentures, frameNumber){
-        if(frameNumber % 10 === 0) {
-            dentures.spriteCol += 1;
-    
-            if(dentures.spriteCol >= dentures.spriteColumns) {
-                dentures.spriteCol = 0;
-            }
-    
-            dentures.spriteX = (dentures.width * dentures.spriteCol)
-            dentures.spriteY = (dentures.height * dentures.spriteRow)
-        }
-    }
 
+    // Shooting projectiles method called by keybord "s". Takes player position as a reference
     shootDentures(position) {
         const newDentures = {
             width: this.denturesWidth,
@@ -46,10 +41,26 @@ class Projectiles {
             spriteX: 0,
             spriteY: 0
         }
-
         return this.dentures.push(newDentures);
+    };
+
+
+    // Sprite logic to animate every 10 frames
+    setSpriteFrame(dentures, frameNumber){
+        if(frameNumber % 10 === 0) {
+            dentures.spriteCol += 1;
+    
+            if(dentures.spriteCol >= dentures.spriteColumns) {
+                dentures.spriteCol = 0;
+            }
+    
+            dentures.spriteX = (dentures.width * dentures.spriteCol)
+            dentures.spriteY = (dentures.height * dentures.spriteRow)
+        }
     }
 
+
+    // Draw
     draw(frameNumber) {
         this.dentures.forEach((dentures) => {
             this.setSpriteFrame(dentures, frameNumber)

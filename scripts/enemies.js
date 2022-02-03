@@ -11,47 +11,30 @@ class Enemies{
         this.enemyV = -8; // Rate of frames at which enemies are created
 
         this.nurses = [];
-    }
+    };
 
-    // Obstacles initial settings
+    // Enemies initial settings
     init(){
         this.nurses = [];
         this.enemyRate = 150;
         this.enemyV = -8;
-        this.nurses.forEach(nurse => nurse.x = 2000)
-    }
+    };
 
-    move(frameNumber){ // PENSAR DIFICULTAT!!!
-        if(frameNumber < 100) return;
 
-        if(frameNumber % this.enemyRate === 0){
+    // Enemies start appearing at random spacing in a set rate
+    move(frames){
+        if(frames < 100) return;
+
+        if(frames % this.enemyRate === 0){
             const nursePosition = Math.floor((Math.random() * (this.ctx.canvas.width)) + 1000)
             this.nurses.push(this.getNurse(nursePosition));
         }
     
         this.nurses.forEach(nurse => nurse.x += nurse.vx);
-    }
+    };
 
-    increaseDifficulty(frameNumber){
-        if(frameNumber % 500 === 0 && frameNumber !== 0){
-            this.enemyRate -= 6;
-            this.enemyV -= 0.5;
-        }
-    }
 
-    setSpriteFrame(nurse, frameNumber) {
-        if(frameNumber % 10 === 0) {
-            nurse.spriteCol += 1;
-    
-            if(nurse.spriteCol >= nurse.spriteColumns) {
-                nurse.spriteCol = 0;
-            }
-    
-            nurse.spriteX = (nurse.width * nurse.spriteCol)
-            nurse.spriteY = (nurse.height * nurse.spriteRow)
-        }
-    }
-
+    // Method to create new objects to be pushed in move
     getNurse(position){
         const newNurse = {
             x: position,
@@ -72,8 +55,34 @@ class Enemies{
 
 
         return newNurse;
-    }
+    };
 
+
+    // Increasing difficulty method
+    increaseDifficulty(frames){
+        if(frames % 500 === 0 && frames !== 0){
+            this.enemyRate -= 6;
+            this.enemyV -= 0.5;
+        }
+    };
+
+    
+    // Sprite logic to animate every 10 frames
+    setSpriteFrame(nurse, frameNumber) {
+        if(frameNumber % 10 === 0) {
+            nurse.spriteCol += 1;
+    
+            if(nurse.spriteCol >= nurse.spriteColumns) {
+                nurse.spriteCol = 0;
+            }
+    
+            nurse.spriteX = (nurse.width * nurse.spriteCol)
+            nurse.spriteY = (nurse.height * nurse.spriteRow)
+        }
+    };
+
+
+    // Draw
     draw(frameNumber){
         this.nurses.forEach((nurse) => {
             this.setSpriteFrame(nurse, frameNumber);
@@ -88,7 +97,6 @@ class Enemies{
                 nurse.width,
                 nurse.height
             )
-        })
-        
-    }
+        })    
+    };
 }

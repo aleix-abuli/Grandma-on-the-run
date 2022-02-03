@@ -32,7 +32,7 @@ class Game {
 
                 setTimeout(() => {
                     this.hasShot = false;
-                }, 300);
+                }, 1000);
             }
         })
     };
@@ -61,6 +61,7 @@ class Game {
         this.projectiles.init();
         this.helicopters.init();
         this.helibullets.init();
+        backgroundMusic.currentTime = 0;
         backgroundMusic.play();
     };
 
