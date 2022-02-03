@@ -2,16 +2,16 @@ class Game {
     constructor(ctx, player, obstacles, enemies, background, projectiles, helicopters, helibullets){
         this.ctx = ctx;
         this.player = player;
+        this.projectiles = projectiles;
         this.obstacles = obstacles;
         this.enemies = enemies;
         this.background = background;
         this.helicopters = helicopters;
         this.helibullets = helibullets;
-        this.frameNumber = 0;
-        this.projectiles = projectiles;
         this.hasShot = false;
         this.score = 0;
         this.frames = 0;
+        this.frameNumber = 0;
 
         document.addEventListener("keydown", (event) => {
             if (event.repeat) return;
@@ -23,7 +23,7 @@ class Game {
         document.addEventListener('keyup', (event) => {
             if ((event.code === 'KeyS' && this.player.x === 100) && this.hasShot === false){
                 
-                this.projectiles.shootDentures(this.player);
+                this.projectiles.shootDentures(this.player.y);
                 this.hasShot = true;
 
                 setTimeout(() => {
@@ -40,14 +40,11 @@ class Game {
         
     };
 
+
     init(){
         if(this.frameNumber) this.stop();
         this.frameNumber = 0;
         this.frames = 0;
-        this.obstacles.nurses = [];
-        this.obstacles.chairs = [];
-        this.helicopters.helicopters = [];
-        console.log(this.frameNumber)
         this.score = 0;
         this.background.init();
         this.player.init();
@@ -58,33 +55,27 @@ class Game {
         this.helibullets.init();
     };
 
+
     play(){
         this.move();
-        this.draw();
         this.destroyEnemies();
         this.scoreUpdate();
         this.increaseDifficulty();
-        if (this.checkCollisions()) {
-            console.log('oops');
-            this.gameOver();
-        }
+        this.draw();
+
+        if (this.checkCollisions()) this.gameOver();
         
         if (this.frameNumber !== null) {
-            this.frameNumber = requestAnimationFrame(this.play.bind(this));
+            this.frameNumber = requestAnimationFrame(this.play.bind(this))
         }
-        
-        this.enemies.nurses.forEach(enemy => console.log('enemy', enemy.vx))
-        this.obstacles.chairs.forEach(chair => console.log('chair', chair.vx))
-
-        console.log('FRAMENUMBER',this.frameNumber)
-        console.log('FRAMES',this.frames)
     };
+
 
     stop(){
         cancelAnimationFrame(this.frameNumber);
         this.frameNumber = null;
-        
-    }
+    };
+
 
     move(){
         this.frames ++;
@@ -95,93 +86,88 @@ class Game {
         this.projectiles.move(this.frames);
         this.helicopters.move(this.frames);
         this.helibullets.move(this.frames, this.helicopters.helicopters);
-    }
+    };
 
+
+    // Returning true when the player collides with an obstacle
     checkCollisions(){
         let collisions = false;
 
+        if(this.obstacles.chairs.some((chair) =>
+            this.player.collidesWith(chair)) ||
 
-        if (this.obstacles.chairs.some((chair) =>
-            this.player.collidesWith(chair)
-                )
-            )   {
-            collisions = true;
-        }
+            this.enemies.nurses.some((nurse) =>
+            this.player.collidesWith(nurse)) ||
 
-        if (this.enemies.nurses.some((nurse) =>
-            this.player.collidesWith(nurse)
-                )
-            )   {
-            collisions = true;
-        }
+            this.helicopters.helicopters.some((helicopter) =>
+            this.player.collidesWith(helicopter)) ||
 
-        if (this.helicopters.helicopters.some((helicopter) =>
-            this.player.collidesWith(helicopter)
-                )
-            )   {
-            collisions = true;
-        }
-
-        if (this.helibullets.bullets.some((bullet) =>
-            this.player.collidesWith(bullet)
-                )
-            )   {
+            this.helibullets.bullets.some((bullet) =>
+            this.player.collidesWith(bullet))
+        ) {
             collisions = true;
         }
 
         return collisions;
-    }
+    };
+
 
     destroyEnemies(){
+        // Splicing nurses and dentures when they collide or leave the canvas
         this.enemies.nurses.forEach((nurse, indexNurse)=>{
-
             this.projectiles.dentures.forEach((dentures, indexDenture)=>{
+                
                if(dentures.x > this.ctx.canvas.width) this.projectiles.dentures.splice(indexDenture, 1);
                if(nurse.x < -500) this.enemies.nurses.splice(indexNurse, 1);
-                
-                let collides = nurse.x <= dentures.x + dentures.width &&
-                nurse.x + nurse.width >= dentures.x &&  
-    
-                nurse.y <= dentures.y + dentures.height &&
-                nurse.y + nurse.height >= dentures.y;
-                
-                if(collides) {
-                    this.enemies.nurses.splice(indexNurse,1)
-                    this.projectiles.dentures.splice(indexDenture,1)
-                }
-           })
+               
+               if(this.contactCheck(nurse, dentures)) {
+                this.enemies.nurses.splice(indexNurse,1)
+                this.projectiles.dentures.splice(indexDenture,1)
+               }
+            })
         })
 
+        // Splicing helicopters and dentures when they collide or leave the canvas
         this.helicopters.helicopters.forEach((helicopter, indexHelicopter)=>{
-
             this.projectiles.dentures.forEach((dentures, indexDenture)=>{
+
                if(dentures.x > this.ctx.canvas.width) this.projectiles.dentures.splice(indexDenture, 1);
                if(helicopter.x < -500) this.helicopters.helicopters.splice(indexHelicopter, 1);
                 
-                let collides = helicopter.x <= dentures.x + dentures.width &&
-                helicopter.x + helicopter.width >= dentures.x &&  
-    
-                helicopter.y <= dentures.y + dentures.height &&
-                helicopter.y + helicopter.height >= dentures.y;
-                
-                if(collides) {
-                    this.helicopters.helicopters.splice(indexHelicopter,1)
-                    this.projectiles.dentures.splice(indexDenture,1)
-                }
-           })
+               if(this.contactCheck(helicopter, dentures)) {
+                this.helicopters.helicopters.splice(indexHelicopter,1)
+                this.projectiles.dentures.splice(indexDenture,1)
+               }
+            })
         })
 
+        // Splicing wheelchairs that have left the canvas
         this.obstacles.chairs.forEach((chair, indexChair)=>{
             if(chair.x < -500) this.obstacles.chairs.splice(indexChair, 1)
         })
-    }
+    };
 
+
+    // Checking for collisions between dentures and enemies
+    contactCheck(element1,element2){
+        return (element1.x <= element2.x + element2.width &&
+            element1.x + element1.width >= element2.x &&  
+    
+            element1.y <= element2.y + element2.height &&
+            element1.y + element1.height >= element2.y
+        );
+    };
+
+
+    // Increasing difficulty every x frames
     increaseDifficulty(){
-        this.enemies.increaseDifficulty(this.frameNumber);
-        this.obstacles.increaseDifficulty(this.frameNumber);
-        this.background.increaseVelocity(this.frameNumber);
-    }
+        this.enemies.increaseDifficulty(this.frames);
+        this.obstacles.increaseDifficulty(this.frames);
+        this.background.increaseVelocity(this.frames);
+    };
 
+
+    // Draw everything
     draw(){
         this.ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
         this.background.draw(this.frameNumber);
@@ -192,20 +178,26 @@ class Game {
         this.helicopters.draw(this.frameNumber);
         this.helibullets.draw(this.frameNumber);
         this.drawScore();
-    }
+    };
 
+
+    // Updating score every 20 frames
     scoreUpdate(){
-        if(this.frameNumber !== 0 && this.frameNumber% 20 === 0)this.score ++
-    }
+        if(this.frames !== 0 && this.frames% 20 === 0)this.score ++
+    };
 
+
+    // Draw score
     drawScore(){
         this.ctx.save();
         this.ctx.fillStyle = "#450099";
         this.ctx.font = "bold 24px 'Press Start 2P'";
         this.ctx.fillText(`SCORE: ${this.score}`, 30, 50);
         this.ctx.restore();
-    }
+    };
     
+
+    // Game Over
     gameOver(){
         this.stop();
         this.ctx.save();
@@ -215,11 +207,11 @@ class Game {
         this.ctx.textAlign = "center";
         this.ctx.font = "bold 32px 'Press Start 2P'";
         this.ctx.fillText(
-            `Oops!\nBack to the asylum!`,
+            `Oops! Back to the asylum!`,
             this.ctx.canvas.width/2,
             this.ctx.canvas.height/2
         );
         this.ctx.restore();
-    }
+    };
 
 }

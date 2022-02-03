@@ -29,11 +29,11 @@ class Projectiles {
         }
     }
 
-    shootDentures(player) {
+    shootDentures(position) {
         const newDentures = {
             width: this.denturesWidth,
             height: this.denturesHeight,
-            y: player.y + 35,
+            y: position + 35,
             x: 150,
             vx : 8,
             vy: 0,
