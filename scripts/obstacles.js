@@ -4,7 +4,7 @@ class Obstacles{
         this.chairWidth = 53;
         this.chairHeight = 55;
         this.chairImg = new Image();
-        this.chairImg.src = "/images/wheelchair.png"
+        this.chairImg.src = "images/wheelchair.png"
         this.obstacleV = -5;
         this.obstacleRate = 220;
         this.chairs = [];

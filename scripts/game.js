@@ -195,7 +195,7 @@ class Game {
     }
 
     scoreUpdate(){
-        if(this.frameNumber !== 0 && this.frameNumber% 20 === 0)this.score ++
+        if(this.frameNumber !== 0 && this.frameNumber % 20 === 0) this.score ++
     }
 
     drawScore(){

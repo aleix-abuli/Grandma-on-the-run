@@ -41,7 +41,7 @@ class Helicopters{
         const newHelicopter = {
             x: position,
             y: 80,
-            vx: -9,
+            vx: -7,
             vy: 0,
             width: this.helicopterWidth,
             height: this.helicopterHeight,
