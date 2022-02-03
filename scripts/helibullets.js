@@ -15,6 +15,7 @@ class Helibullets {
     move(frameNumber, helicopterArr) {
         if(frameNumber%100 === 0) helicopterArr.forEach((helicopter)=>{
             if(helicopter.x < this.ctx.canvas.width) this.shoot(helicopter)
+            bulletSound.play();
         })
         
         this.bullets.forEach(bullet => bullet.x += bullet.vx)

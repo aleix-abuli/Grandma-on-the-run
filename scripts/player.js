@@ -7,6 +7,7 @@ class Player{
         this.y = 320;
         this.vy = 0; // velocity
         this.ay = 1; // gravity
+        this.speed = 5;
 
         this.img = new Image();
         this.img.src = '/images/grandma.png';
@@ -21,6 +22,8 @@ class Player{
 
     }
 
+
+    // Player initial settings
     init(){
         this.x = -500;
         this.spriteCol = 0;
@@ -29,20 +32,25 @@ class Player{
         this.spriteY = 0;
     }
 
-    move(frameNumber){
-        let velocity = 5;
+
+    // Move at every frame
+    move(frames){
         if(this.x < 100){
-            this.x += velocity;
+            this.x += this.speed;
         }
+
+        // Jumping "physics"
         this.vy += this.ay;
         this.y += this.vy;
+    
         if(this.y > 320) this.y = 320;
         if(this.y < 40) this.y = 40;
-        
     }
 
-    setSpriteFrame(frameNumber){
-        if(frameNumber % 10 === 0){
+
+    // Sprite logic to animate every 10 frames
+    setSpriteFrame(frames){
+        if(frames % 10 === 0){
             this.spriteCol += 1;
 
             if(this.spriteCol >= this.spriteColumns) {
@@ -54,12 +62,16 @@ class Player{
         }
     }
 
-    jump(frameNumber){
+
+    // Jumping mechanics
+    jump(){
         if(this.y === 320) this.vy = -23;
     }
 
-    draw(frameNumber){
-        this.setSpriteFrame(frameNumber);
+
+    // Draw
+    draw(frames){
+        this.setSpriteFrame(frames);
         this.ctx.drawImage(
             this.img,
             this.spriteX,
@@ -73,6 +85,8 @@ class Player{
         );
     }
     
+
+    // Checking for collisions between the player and the obstacles/enemies
     collidesWith(object){
         return (
             this.x <= object.x + object.width &&
@@ -80,7 +94,6 @@ class Player{
 
             this.y <= object.y + object.height &&
             this.y + this.height >= object.y
-
         );
     }
 }

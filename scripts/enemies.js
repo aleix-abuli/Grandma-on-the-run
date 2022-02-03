@@ -3,13 +3,17 @@ class Enemies{
         this.ctx = ctx;
         this.nurseWidth =  68,
         this.nurseHeight = 108,
+
         this.nurseImg =  new Image(),
         this.nurseImg.src = "images/nurse.png"
-        this.enemyRate = 150;
-        this.enemyV = -8;
+
+        this.enemyRate = 150; // Velocity that increments with increaseDifficulty()
+        this.enemyV = -8; // Rate of frames at which enemies are created
+
         this.nurses = [];
     }
 
+    // Obstacles initial settings
     init(){
         this.nurses = [];
         this.enemyRate = 150;
