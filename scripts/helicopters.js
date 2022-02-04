@@ -14,7 +14,6 @@ class Helicopters{
     // Helicopters initial settings
     init(){
         this.helicopters = [];
-        this.helicopters.forEach(helicopter => helicopter.x = 2000)
     };
 
 

@@ -29,7 +29,7 @@ class Game {
                 this.projectiles.shootDentures(this.player.y);
                 this.hasShot = true;
                 dentures.play();
-
+                
                 setTimeout(() => {
                     this.hasShot = false;
                 }, 1000);

@@ -5,7 +5,7 @@ class Projectiles {
         this.denturesWidth = 54;
 
         this.denturesImg = new Image(),
-        this.denturesImg.src = '/images/dentures.png'
+        this.denturesImg.src = 'images/dentures.png'
 
         this.dentures = [];
     };
