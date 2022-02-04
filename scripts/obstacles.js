@@ -27,7 +27,12 @@ class Obstacles{
         if(frames < 100) return;
 
         if(frames % this.obstacleRate === 0){
-            const chairPosition = Math.floor((Math.random() * (this.ctx.canvas.width)) + 1000)
+            let chairPosition = Math.floor((Math.random() * (this.ctx.canvas.width)) + 1000)
+
+            this.chairs.forEach((chair)=>{
+                if(chair.x <= chairPosition-200 || chair.x >= chairPosition+200) chairPosition += 200
+            })
+
             this.chairs.push(this.getChair(chairPosition));
         }
 

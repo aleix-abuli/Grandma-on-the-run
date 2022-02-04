@@ -1,8 +1,8 @@
 class Helibullets {
     constructor(ctx){
         this.ctx = ctx;
-        this.bulletsHeight = 75;
-        this.bulletsWidth = 54;
+        this.bulletsHeight = 26;
+        this.bulletsWidth = 50;
 
         this.bulletsImg = new Image(),
         this.bulletsImg.src = '/images/bullets.png'
