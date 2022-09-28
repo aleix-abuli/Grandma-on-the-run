@@ -12,10 +12,15 @@
 </head>
 <body>
     <div class = 'game-area'>
-        <h1>Grandma on the run!</h1>
-        <button id="start-button">START</button>
+        <h1 id="title">Grandma on the run!</h1>
+        <p id="description">Grandma has escaped the asylum!! Help her flee by jumping over the wheelchairs barring the way and knocking out the hospital staff.</p>
+        <div class="instructions">
+            <p>Press 'S' to shoot</p>
+            <p>Press 'space' to jump</p>
+        </div>
         <div id="game-board">
-            <canvas id='canvas' width='1000' height='550'></canvas>
+            <button id="start-button">START</button>
+            <canvas id='canvas' width='1000' height='550' class="dispNone"></canvas>
         </div>
     </div>
 

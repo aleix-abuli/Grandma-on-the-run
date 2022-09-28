@@ -18,7 +18,7 @@ class Game {
             if (event.repeat) return;
             if (event.code === 'Space') {
                 this.player.jump();
-                jump.play();
+                /* jump.play(); */
             }
         });
 
@@ -37,10 +37,7 @@ class Game {
         })
     };
     
-
-
     // ------ GAME LOOP METHODS ------
-
     // Start on click
     start(){
         this.init();
@@ -65,7 +62,6 @@ class Game {
         backgroundMusic.play();
     };
 
-
     // Play every frame
     play(){
         this.move();
@@ -81,14 +77,12 @@ class Game {
         }
     };
 
-
     // Stop when initializing to set everyhting back to the start
     stop(){
         cancelAnimationFrame(this.frameNumber);
         this.frameNumber = null;
         backgroundMusic.pause();
     };
-
 
     // Move every frame
     move(){
@@ -102,14 +96,12 @@ class Game {
         this.helibullets.move(this.frames, this.helicopters.helicopters);
     };
 
-
     // Increasing difficulty every x frames
     increaseDifficulty(){
         this.enemies.increaseDifficulty(this.frames);
         this.obstacles.increaseDifficulty(this.frames);
         this.background.increaseVelocity(this.frames);
     };
-
 
     // Draw everything
     draw(){
@@ -124,12 +116,10 @@ class Game {
         this.drawScore();
     };
 
-
     // Updating score every 20 frames
     scoreUpdate(){
         if(this.frames !== 0 && this.frames% 20 === 0)this.score ++
     };
-
 
     // Draw score
     drawScore(){
@@ -140,7 +130,6 @@ class Game {
         this.ctx.restore();
     };
     
-
     // Game Over
     gameOver(){
         over.play();
@@ -159,10 +148,7 @@ class Game {
         this.ctx.restore();
     };
 
-
-
     // ------ GAME COLLISIONS METHODS ------
-
     // Returning true when the player collides with an obstacle
     checkCollisions(){
         let collisions = false;
@@ -184,7 +170,6 @@ class Game {
 
         return collisions;
     };
-
 
     // Checking for collisions between enemies and projectiles
     destroyEnemies(){
@@ -223,7 +208,6 @@ class Game {
             if(chair.x < -500) this.obstacles.chairs.splice(indexChair, 1)
         })
     };
-
 
     // Checking for collisions between dentures and enemies
     contactCheck(element1,element2){

@@ -4,6 +4,13 @@
 
 body {
     background-color: #ffbc5e;
+    font-family: 'Press Start 2P', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    margin: 0;
 }
 
 .game-area {
@@ -14,22 +21,22 @@ body {
 }
 
 #start-button {
+    font-family: 'Press Start 2P', cursive;
     padding: 10px 20px;
     color: white;
     background-color: #450099;
     border-radius: 20px;
     border: 0px;
-    font-family: 'Press Start 2P', cursive;
     font-size: 1.5rem;
 }
 
 canvas {
     border-radius: 50px;
-    margin-top: 20px;
+    width: 1000px;
+    height: 550px;
 }
 
 h1 {
-    font-family: 'Press Start 2P', cursive;
     color: #450099;
     font-size: 3rem;
     background-color: white;
@@ -38,4 +45,40 @@ h1 {
     border-radius: 50px;
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+#description {
+    color: #450099;
+    width: 80%;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.instructions {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.instructions>p {
+    color: #450099;
+    text-align: center;
+    margin: 5px 0;
+}
+
+.dispNone {
+    display: none;
+}
+
+.relative {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    z-index: 100;
+}
+
+#game-board {
+    position: relative;
 }
