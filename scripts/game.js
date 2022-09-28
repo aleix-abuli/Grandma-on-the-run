@@ -18,7 +18,7 @@ class Game {
             if (event.repeat) return;
             if (event.code === 'Space') {
                 this.player.jump();
-                /* jump.play(); */
+                jump.play();
             }
         });
 
