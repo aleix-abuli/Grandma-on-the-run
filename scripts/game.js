@@ -10,6 +10,7 @@ class Game {
         this.helibullets = helibullets;
         this.hasShot = false;
         this.score = 0;
+        this.highestScore = 0;
         this.frames = 0;
         this.frameNumber = 0;
         this.interval = 1000;
@@ -136,8 +137,10 @@ class Game {
     drawScore(){
         this.ctx.save();
         this.ctx.fillStyle = "#450099";
-        this.ctx.font = "bold 24px 'Press Start 2P'";
+        this.ctx.font = "24px 'Press Start 2P'";
         this.ctx.fillText(`SCORE: ${this.score}`, 30, 50);
+        this.ctx.font = "12px 'Press Start 2P'";
+        this.ctx.fillText(`Highest: ${this.highestScore}`, 30, 70);
         this.ctx.restore();
     };
     
@@ -150,12 +153,21 @@ class Game {
         this.ctx.fillRect(0,0,this.ctx.canvas.width, this.ctx.canvas.height);
         this.ctx.fillStyle = "white";
         this.ctx.textAlign = "center";
-        this.ctx.font = "bold 32px 'Press Start 2P'";
+        this.ctx.font = "32px 'Press Start 2P'";
         this.ctx.fillText(
             `Oops! Back to the asylum!`,
             this.ctx.canvas.width/2,
             this.ctx.canvas.height/2
         );
+        if(this.score > this.highestScore){
+            this.highestScore = this.score;
+            this.ctx.font = "16px 'Press Start 2P'";
+            this.ctx.fillText(
+            `New highest score! ${this.highestScore}`,
+            this.ctx.canvas.width/2,
+            this.ctx.canvas.height/2 + 25
+        );
+        }
         this.ctx.restore();
     };
 
