@@ -76,10 +76,9 @@ class Background{
         if(this.backgroundFront.x + this.backgroundFront.width <= 0) this.backgroundFront.x = 0;
     }
 
-    increaseVelocity(frameNumber){
-        if(frameNumber % 500 === 0 && frameNumber !== 0){
-            this.backgroundFront.vx -= 0.5;
-        }
+    increaseVelocity(frames){
+        if(frames === 0) this.backgroundFront.vx = -5;
+        else this.backgroundFront.vx -= 0.5;
     }
 
     draw(frameNumber){

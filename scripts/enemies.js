@@ -60,7 +60,10 @@ class Enemies{
 
     // Increasing difficulty method
     increaseDifficulty(frames){
-        if(frames % 500 === 0 && frames !== 0){
+        if(frames === 0) {
+            this.enemyRate = 150;
+            this.enemyV = -8;
+        } else {
             this.enemyRate -= 6;
             this.enemyV -= 0.5;
         }

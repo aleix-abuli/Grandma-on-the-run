@@ -82,3 +82,9 @@ h1 {
 #game-board {
     position: relative;
 }
+
+#footer {
+    font-size: 8px;
+    margin-top: 20px;
+    color: #450099;
+}

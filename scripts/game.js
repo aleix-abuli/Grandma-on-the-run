@@ -12,6 +12,7 @@ class Game {
         this.score = 0;
         this.frames = 0;
         this.frameNumber = 0;
+        this.interval = 1000;
 
         // Event listener for jumping
         document.addEventListener("keydown", (event) => {
@@ -32,7 +33,7 @@ class Game {
                 
                 setTimeout(() => {
                     this.hasShot = false;
-                }, 1000);
+                }, this.interval);
             }
         })
     };
@@ -98,9 +99,19 @@ class Game {
 
     // Increasing difficulty every x frames
     increaseDifficulty(){
-        this.enemies.increaseDifficulty(this.frames);
-        this.obstacles.increaseDifficulty(this.frames);
-        this.background.increaseVelocity(this.frames);
+        if(this.frameNumber % 500 === 0){
+            this.enemies.increaseDifficulty(this.frameNumber);
+            this.obstacles.increaseDifficulty(this.frameNumber);
+            this.background.increaseVelocity(this.frameNumber);
+        }
+
+        if(this.frameNumber % 1000 === 0 && this.frameNumber > 1000){
+            this.interval -= 100;
+        }
+
+        if(this.frameNumber === 0){
+            this.interval = 1000;
+        }
     };
 
     // Draw everything

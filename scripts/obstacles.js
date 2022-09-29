@@ -30,7 +30,7 @@ class Obstacles{
             let chairPosition = Math.floor((Math.random() * (this.ctx.canvas.width)) + 1000)
 
             this.chairs.forEach((chair)=>{
-                if(chair.x <= chairPosition-200) chairPosition += 200
+                if(chair.x >= chairPosition-200) chairPosition += 500
             })
 
             this.chairs.push(this.getChair(chairPosition));
@@ -57,7 +57,10 @@ class Obstacles{
 
     // Increasing difficulty method
     increaseDifficulty(frames){
-        if(frames % 500 === 0 && frames !== 0){
+        if(frames === 0){
+            this.obstacleRate = 220;
+            this.obstacleV = -5;
+        } else {
             this.obstacleRate -= 6;
             this.obstacleV -= 0.5;
         }
